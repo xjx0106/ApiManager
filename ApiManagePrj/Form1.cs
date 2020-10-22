@@ -52,19 +52,23 @@ namespace ApiManagePrj
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string apiList;
-            string[] result;
+            string apiListRead;
+            string apiListToString;
             string apiFolderPath = textBox1.Text + @"\node_modules\@dataexa\" + listBox1.SelectedItem.ToString();
             //\src\client\index.ts
             string apiListFilePath = apiFolderPath + @"\src\client\index.ts";
             using (FileStream fs = File.Open(apiListFilePath, FileMode.Open))
             {
                 StreamReader br = new StreamReader(fs, Encoding.UTF8);
-                Console.WriteLine(br.ReadToEnd());
-                apiList = br.ReadToEnd().Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
-                Console.WriteLine(apiList);
-                Regex reg = new Regex(@"\Aimport\zfrom");
+                apiListRead = br.ReadToEnd(); //Replace("\n", "")
+                apiListToString = apiListRead.Replace("\n","").Replace(" ", "").Replace("\t", "").Replace("\r", "");
+                //Console.WriteLine(apiListToString);
             }
+            string start = "import{";
+            string end = "}from";
+            Regex rg = new Regex("(?<=(" + start + "))[.\\s\\S]*?(?=(" + end + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            Console.WriteLine("apis: " + rg.Match(apiListToString).Value);
+
         }
     }
 }
