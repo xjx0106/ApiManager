@@ -21,6 +21,25 @@ namespace ApiManagePrj
 
         // 公共操作
         /// <summary>
+        /// 遍历该路径下的文件夹
+        /// </summary>
+        /// <param name="path">要遍历的文件夹路径</param>
+        /// <returns>返回一个string[]</returns>
+        public string[] foreachFolders(string path)
+        {
+            try
+            {
+                string[] folders = Directory.GetDirectories(path, "*.*", SearchOption.TopDirectoryOnly);
+                return folders;
+            }
+            catch
+            {
+                MessageBox.Show("没有找到该文件夹");
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 读取文件流
         /// </summary>
         /// <param name="path">要读取的文件地址</param>
@@ -54,8 +73,8 @@ namespace ApiManagePrj
         private void button1_Click(object sender, EventArgs e)
         {
             // string[] files = Directory.GetFiles(projectPath,"*.*", SearchOption.TopDirectoryOnly);
-            string[] rootFolders = foreachFolders(projectPath); // 遍历项目里的子文件夹（为了寻找出node_modules）
             listBox1.Items.Clear(); // 清除api项目列表
+            string[] rootFolders = foreachFolders(projectPath); // 遍历项目里的子文件夹（为了寻找出node_modules）
             foreach (string folder in rootFolders) // 遍历根目录找出node_modules文件夹
             {
                 if (folder.EndsWith("node_modules")) // 选择出node_modules文件夹
@@ -73,26 +92,22 @@ namespace ApiManagePrj
                     
                 }
             }
+
+            listBox4.Items.Clear();
+            string[] providersFolders = Directory.GetFiles(projectPath + @"\src\providers", "*.js", SearchOption.TopDirectoryOnly);
+            foreach (string item in providersFolders)
+            {
+                listBox4.Items.Add(item.Substring(item.LastIndexOf(@"\")+1));
+            }
+
+            listBox5.Items.Clear();
+            string[] servicesFolders = Directory.GetFiles(projectPath + @"\src\services", "*.js", SearchOption.TopDirectoryOnly);
+            foreach (string item in servicesFolders)
+            {
+                listBox5.Items.Add(item.Substring(item.LastIndexOf(@"\") + 1));
+            }
         }
 
-        /// <summary>
-        /// 遍历该路径下的文件夹
-        /// </summary>
-        /// <param name="path">要遍历的文件夹路径</param>
-        /// <returns>返回一个string[]</returns>
-        public string[] foreachFolders(string path)
-        {
-            try
-            {
-                string[] folders = Directory.GetDirectories(path, "*.*", SearchOption.TopDirectoryOnly);
-                return folders;
-            }
-            catch
-            {
-                MessageBox.Show("没有找到该文件夹");
-                return null;
-            }
-        }
 
         /// <summary>
         /// 点击listBox1里的项目，遍历该Api项目的api类名
@@ -134,11 +149,35 @@ namespace ApiManagePrj
         /// <param name="e"></param>
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            listBox3.Items.Clear();
             string path = projectPath + @"\node_modules\@dataexa\"+ listBox1.SelectedItem + @"\src\api\api.ts"; 
-            Console.WriteLine(path);
+            // Console.WriteLine(path);
             string apiListFileRead = readTextFile(path);
 
-            string pattren1 = listBox2.SelectedItem.ToString(); // WordApi
+            // 正则的规则
+            string[] pattern1 = { listBox2.SelectedItem.ToString()+ " - axios parameter creator", listBox2.SelectedItem.ToString() + " - functional programming interface" }; // 用于识别WordApi
+            string pattern2 = @"\bWordApi\b";
+            string pattern3 = @"\n\s*\b\w*\b[(]"; // \n\s*\b\w*\b[(] new Regex(@"\n\s*\b\w*\b[(]")
+
+            // 正则的声明
+            Regex rg1 = new Regex("(?<=(" + pattern1[0] + "))[.\\s\\S]*?(?=(" + pattern1[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            Regex rg2 = new Regex(pattern2);
+            //Regex rg3 = new Regex(@"\n\s*\b\w*\b[(]", RegexOptions.Multiline);
+            Regex rg3 = new Regex(pattern3, RegexOptions.Multiline);
+
+            // 正则的使用
+            string resultClass = rg1.Match(apiListFileRead).ToString();
+            string _resultClass = resultClass;
+ 
+            while(rg3.IsMatch(_resultClass))
+            {
+                var res = rg3.Match(_resultClass);
+                string _res = res.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
+                Console.WriteLine("----");
+                Console.WriteLine(_res);
+                listBox3.Items.Add(_res.Substring(0, _res.Length-1));
+                _resultClass = _resultClass.Substring(res.Index + res.Value.Length);
+            }
         }
 
         /// <summary>
@@ -149,6 +188,11 @@ namespace ApiManagePrj
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             projectPath = textBox1.Text;
+        }
+
+        private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
