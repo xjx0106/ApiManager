@@ -40,6 +40,13 @@
             this.label5 = new System.Windows.Forms.Label();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.listBox5 = new System.Windows.Forms.ListBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.listBox6 = new System.Windows.Forms.ListBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBox1
@@ -154,11 +161,80 @@
             this.listBox5.Size = new System.Drawing.Size(166, 196);
             this.listBox5.TabIndex = 10;
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(473, 450);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(216, 21);
+            this.textBox2.TabIndex = 11;
+            this.textBox2.Text = "/rest/word/batch/remove";
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(473, 567);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(63, 21);
+            this.button2.TabIndex = 12;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(471, 422);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(53, 12);
+            this.label6.TabIndex = 13;
+            this.label6.Text = "请求地址";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(473, 483);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 12);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "请求参数";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(473, 505);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(124, 45);
+            this.textBox3.TabIndex = 15;
+            this.textBox3.Text = "id";
+            // 
+            // listBox6
+            // 
+            this.listBox6.FormattingEnabled = true;
+            this.listBox6.ItemHeight = 12;
+            this.listBox6.Location = new System.Drawing.Point(659, 105);
+            this.listBox6.Name = "listBox6";
+            this.listBox6.Size = new System.Drawing.Size(198, 280);
+            this.listBox6.TabIndex = 16;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(670, 79);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(53, 12);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "请求地址";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(789, 721);
+            this.ClientSize = new System.Drawing.Size(1015, 721);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.listBox6);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.listBox5);
             this.Controls.Add(this.listBox4);
             this.Controls.Add(this.label5);
@@ -192,6 +268,13 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ListBox listBox4;
         private System.Windows.Forms.ListBox listBox5;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.ListBox listBox6;
+        private System.Windows.Forms.Label label8;
     }
 }
 

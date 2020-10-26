@@ -150,33 +150,42 @@ namespace ApiManagePrj
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             listBox3.Items.Clear();
+            listBox6.Items.Clear();
             string path = projectPath + @"\node_modules\@dataexa\"+ listBox1.SelectedItem + @"\src\api\api.ts"; 
             // Console.WriteLine(path);
             string apiListFileRead = readTextFile(path);
 
             // 正则的规则
+            // pattern1 用于匹配出api.ts里的整个API类，匹配出来的东西里面包含了该Api类所有的api接口。
+            // pattern2
+            // pattern3 用于匹配出每个api接口名字。
             string[] pattern1 = { listBox2.SelectedItem.ToString()+ " - axios parameter creator", listBox2.SelectedItem.ToString() + " - functional programming interface" }; // 用于识别WordApi
-            string pattern2 = @"\bWordApi\b";
-            string pattern3 = @"\n\s*\b\w*\b[(]"; // \n\s*\b\w*\b[(] new Regex(@"\n\s*\b\w*\b[(]")
+            string pattern2 = @"/\n\s*\b\w*\b[(]"; // \n\s*\b\w*\b[(] new Regex(@"\n\s*\b\w*\b[(]")
+            string[] pattern3 = { "localVarPath = `", "`" }; // api的请求地址
 
             // 正则的声明
             Regex rg1 = new Regex("(?<=(" + pattern1[0] + "))[.\\s\\S]*?(?=(" + pattern1[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
-            Regex rg2 = new Regex(pattern2);
-            //Regex rg3 = new Regex(@"\n\s*\b\w*\b[(]", RegexOptions.Multiline);
-            Regex rg3 = new Regex(pattern3, RegexOptions.Multiline);
+            Regex rg2 = new Regex(pattern2, RegexOptions.Multiline);
+            Regex rg3 = new Regex("(?<=(" + pattern3[0] + "))[.\\s\\S]*?(?=(" + pattern3[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
 
             // 正则的使用
-            string resultClass = rg1.Match(apiListFileRead).ToString();
-            string _resultClass = resultClass;
+            string resultClass = rg1.Match(apiListFileRead).ToString(); // 匹配出整个api类
+            string _resultClass = resultClass; // 复制api类用于操作
  
-            while(rg3.IsMatch(_resultClass))
+            while(rg2.IsMatch(_resultClass)) // 判断剩余的字符串里是否还有匹配的接口名
             {
-                var res = rg3.Match(_resultClass);
-                string _res = res.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
-                Console.WriteLine("----");
-                Console.WriteLine(_res);
-                listBox3.Items.Add(_res.Substring(0, _res.Length-1));
-                _resultClass = _resultClass.Substring(res.Index + res.Value.Length);
+                var apiNameGet = rg2.Match(_resultClass); // "/\n remove("              带有空格和回车的api名
+                string apiName = apiNameGet.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); // "/remove("
+                string _apiName = apiName.Substring(1, apiName.Length - 2); // "remove"
+                listBox3.Items.Add(_apiName); // "remove"
+
+                _resultClass = _resultClass.Substring(apiNameGet.Length + apiNameGet.Index);
+
+                var apiPathGet = rg3.Match(_resultClass);
+                string apiPath = apiPathGet.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); // "/remove("
+                string _apiPath = apiPath.Substring(0); // "remove"
+                listBox6.Items.Add(_apiPath); // "remove"
+                Console.WriteLine(_apiPath);
             }
         }
 
