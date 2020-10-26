@@ -199,9 +199,27 @@ namespace ApiManagePrj
             projectPath = textBox1.Text;
         }
 
-        private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
+        /// <summary>
+        /// 点击api名或者path名两边对等
+        /// </summary>
+        private void apiNameAndPathEqual(object sender, EventArgs e)
+        {
+            ListBox currentListbox = (ListBox)sender;
+            Console.WriteLine(currentListbox.Name);
+            if (currentListbox.Name == "listBox3")
+            {
+                listBox6.SelectedIndex = listBox3.SelectedIndex;
+            }else if (currentListbox.Name == "listBox6")
+            {
+                listBox3.SelectedIndex = listBox6.SelectedIndex;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
 
         }
+
+        
     }
 }

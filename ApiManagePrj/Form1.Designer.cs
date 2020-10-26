@@ -124,6 +124,7 @@
             this.listBox3.Name = "listBox3";
             this.listBox3.Size = new System.Drawing.Size(170, 280);
             this.listBox3.TabIndex = 6;
+            this.listBox3.SelectedIndexChanged += new System.EventHandler(this.apiNameAndPathEqual);
             // 
             // label4
             // 
@@ -177,6 +178,7 @@
             this.button2.TabIndex = 12;
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label6
             // 
@@ -213,6 +215,7 @@
             this.listBox6.Name = "listBox6";
             this.listBox6.Size = new System.Drawing.Size(198, 280);
             this.listBox6.TabIndex = 16;
+            this.listBox6.SelectedIndexChanged += new System.EventHandler(this.apiNameAndPathEqual);
             // 
             // label8
             // 
