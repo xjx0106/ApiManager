@@ -109,7 +109,6 @@ namespace ApiManagePrj
             }
         }
 
-
         /// <summary>
         /// 点击listBox1里的项目，遍历该Api项目的api类名
         /// </summary>
@@ -140,8 +139,21 @@ namespace ApiManagePrj
                 }
             }
 
+            string selected1 = listBox1.SelectedItem.ToString();
+            int indexJump = -1;
+            int indexToSelected = -1;
+            foreach(var item in listBox4.Items)
+            {
+                Console.WriteLine(item);
+                indexJump++;
+                if(item.ToString().StartsWith(selected1))
+                {
+                    Console.WriteLine("Yeah");
+                    indexToSelected = indexJump;
+                }
+            }
+            listBox4.SelectedIndex = indexToSelected;
         }
-
 
         /// <summary>
         /// listBox2项被点击的事件触发
@@ -205,8 +217,8 @@ namespace ApiManagePrj
         /// </summary>
         private void apiNameAndPathEqual(object sender, EventArgs e)
         {
-            ListBox currentListbox = (ListBox)sender;
-            if (currentListbox.Name == "listBox3")
+            ListBox currentListbox = (ListBox)sender; // 注册事件触发
+            if (currentListbox.Name == "listBox3") 
             {
                 listBox6.SelectedIndex = listBox3.SelectedIndex;
             }else if (currentListbox.Name == "listBox6")
@@ -223,9 +235,14 @@ namespace ApiManagePrj
             }
         }
 
+        /// <summary>
+        /// 点击生成provider和services里的文字
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
-            if (listBox4.SelectedIndex == -1 || listBox5.SelectedIndex == -1)
+            if (listBox4.SelectedIndex == -1 || listBox5.SelectedIndex == -1) // 检测有没有选择对应的providers和services
             {
                 MessageBox.Show("请选择Providers和Services");
                 return;
@@ -234,11 +251,13 @@ namespace ApiManagePrj
             string apiClassName = listBox2.SelectedItem.ToString();
             string apiName = listBox3.SelectedItem.ToString();
             string apiParameterName = textBox3.Text;
+            string servicesFileName = listBox5.Text;
 
-            string apiText = "\t" + apiName + "(" + apiParameterName + "){\n\t\treturn HttpClient." + apiClassName + "." + apiName + "(" + apiParameterName + ");\n\t}";
-            string providersText =
-                "Words in export default:\n" + apiClassName + ":{\n" + apiText + "\n}";
-            textBox4.Text = providersText.Replace("\n", "\r\n");
-        }  
+
+
+
+            new Form2(apiPrjName, apiClassName, apiName, apiParameterName, servicesFileName).Show();
+
+        }
     }
 }

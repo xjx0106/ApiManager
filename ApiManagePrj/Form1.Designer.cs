@@ -47,7 +47,6 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.listBox6 = new System.Windows.Forms.ListBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -225,20 +224,11 @@
             this.label8.TabIndex = 17;
             this.label8.Text = "请求地址";
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(681, 573);
-            this.textBox4.Multiline = true;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(675, 297);
-            this.textBox4.TabIndex = 18;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1015, 721);
-            this.Controls.Add(this.textBox4);
+            this.ClientSize = new System.Drawing.Size(981, 694);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.listBox6);
             this.Controls.Add(this.textBox3);
@@ -286,7 +276,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.ListBox listBox6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox4;
     }
 }
 
