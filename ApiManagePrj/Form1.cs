@@ -252,11 +252,12 @@ namespace ApiManagePrj
             string apiName = listBox3.SelectedItem.ToString();
             string apiParameterName = textBox3.Text;
             string servicesFileName = listBox5.Text;
+            string prjPath = textBox1.Text;
 
 
 
 
-            new Form2(apiPrjName, apiClassName, apiName, apiParameterName, servicesFileName).Show();
+            new Form2(apiPrjName, apiClassName, apiName, apiParameterName, servicesFileName, prjPath).Show();
 
         }
     }
