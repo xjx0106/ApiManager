@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -159,12 +160,12 @@ namespace ApiManagePrj
             // pattern1 用于匹配出api.ts里的整个API类，匹配出来的东西里面包含了该Api类所有的api接口。
             // pattern2
             // pattern3 用于匹配出每个api接口名字。
-            string[] pattern1 = { listBox2.SelectedItem.ToString()+ " - axios parameter creator", listBox2.SelectedItem.ToString() + " - functional programming interface" }; // 用于识别WordApi
+            string[] pattern1 = { "" + listBox2.SelectedItem.ToString()+ " - axios parameter creator", listBox2.SelectedItem.ToString() + " - functional programming interface" }; // 用于识别WordApi
             string pattern2 = @"/\n\s*\b\w*\b[(]"; // \n\s*\b\w*\b[(] new Regex(@"\n\s*\b\w*\b[(]")
             string[] pattern3 = { "localVarPath = `", "`" }; // api的请求地址
 
             // 正则的声明
-            Regex rg1 = new Regex("(?<=(" + pattern1[0] + "))[.\\s\\S]*?(?=(" + pattern1[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            Regex rg1 = new Regex("(?<=(\\s" + pattern1[0] + "))[.\\s\\S]*?(?=(" + pattern1[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
             Regex rg2 = new Regex(pattern2, RegexOptions.Multiline);
             Regex rg3 = new Regex("(?<=(" + pattern3[0] + "))[.\\s\\S]*?(?=(" + pattern3[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
 
@@ -205,7 +206,6 @@ namespace ApiManagePrj
         private void apiNameAndPathEqual(object sender, EventArgs e)
         {
             ListBox currentListbox = (ListBox)sender;
-            Console.WriteLine(currentListbox.Name);
             if (currentListbox.Name == "listBox3")
             {
                 listBox6.SelectedIndex = listBox3.SelectedIndex;
@@ -213,13 +213,32 @@ namespace ApiManagePrj
             {
                 listBox3.SelectedIndex = listBox6.SelectedIndex;
             }
+            textBox3.Text = "params";
+            textBox2.Text = listBox6.SelectedItem.ToString();
+            Regex rg = new Regex(@"{.*}", RegexOptions.Multiline|RegexOptions.Singleline);
+            if (rg.IsMatch(textBox2.Text))
+            {
+                string res = rg.Match(textBox2.Text).Value;
+                textBox3.Text = res.Substring(1,res.Length-2);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (listBox4.SelectedIndex == -1 || listBox5.SelectedIndex == -1)
+            {
+                MessageBox.Show("请选择Providers和Services");
+                return;
+            }
+            string apiPrjName = listBox1.SelectedItem.ToString();
+            string apiClassName = listBox2.SelectedItem.ToString();
+            string apiName = listBox3.SelectedItem.ToString();
+            string apiParameterName = textBox3.Text;
 
-        }
-
-        
+            string apiText = "\t" + apiName + "(" + apiParameterName + "){\n\t\treturn HttpClient." + apiClassName + "." + apiName + "(" + apiParameterName + ");\n\t}";
+            string providersText =
+                "Words in export default:\n" + apiClassName + ":{\n" + apiText + "\n}";
+            textBox4.Text = providersText.Replace("\n", "\r\n");
+        }  
     }
 }

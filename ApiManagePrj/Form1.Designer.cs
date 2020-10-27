@@ -47,6 +47,7 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.listBox6 = new System.Windows.Forms.ListBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.textBox4 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -166,13 +167,12 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(473, 450);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(216, 21);
+            this.textBox2.Size = new System.Drawing.Size(382, 21);
             this.textBox2.TabIndex = 11;
-            this.textBox2.Text = "/rest/word/batch/remove";
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(473, 567);
+            this.button2.Location = new System.Drawing.Point(473, 561);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(63, 21);
             this.button2.TabIndex = 12;
@@ -203,9 +203,8 @@
             this.textBox3.Location = new System.Drawing.Point(473, 505);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(124, 45);
+            this.textBox3.Size = new System.Drawing.Size(131, 41);
             this.textBox3.TabIndex = 15;
-            this.textBox3.Text = "id";
             // 
             // listBox6
             // 
@@ -213,7 +212,7 @@
             this.listBox6.ItemHeight = 12;
             this.listBox6.Location = new System.Drawing.Point(659, 105);
             this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(198, 280);
+            this.listBox6.Size = new System.Drawing.Size(280, 280);
             this.listBox6.TabIndex = 16;
             this.listBox6.SelectedIndexChanged += new System.EventHandler(this.apiNameAndPathEqual);
             // 
@@ -226,11 +225,20 @@
             this.label8.TabIndex = 17;
             this.label8.Text = "请求地址";
             // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(681, 573);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(675, 297);
+            this.textBox4.TabIndex = 18;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1015, 721);
+            this.Controls.Add(this.textBox4);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.listBox6);
             this.Controls.Add(this.textBox3);
@@ -278,6 +286,7 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.ListBox listBox6;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox4;
     }
 }
 
