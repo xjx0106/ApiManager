@@ -70,6 +70,9 @@ namespace ApiManagePrj
         {
             InitializeComponent();
             projectPath = textBox1.Text; // 获取前端项目的地址
+
+            // 输入框不选中任何文字
+            textBox1.Select(0, 0);
         }
 
         /// <summary>
@@ -249,8 +252,11 @@ namespace ApiManagePrj
             {
                 return;
             }
+            textBox2.Text = "";
+            textBox3.Text = "";
             listBox3.Items.Clear();
             listBox6.Items.Clear();
+            listBox8.Items.Clear();
             string path = projectPath + @"\node_modules\@dataexa\"+ listBox1.SelectedItem + @"\src\api\api.ts"; 
             // Console.WriteLine(path);
             string apiListFileRead = readTextFile(path);
@@ -266,7 +272,9 @@ namespace ApiManagePrj
             // 正则的声明
             Regex rg1 = new Regex("(?<=(\\s" + pattern1[0] + "))[.\\s\\S]*?(?=(" + pattern1[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
             Regex rg2 = new Regex(pattern2, RegexOptions.Multiline);
-            Regex rg3 = new Regex("(?<=(" + pattern3[0] + "))[.\\s\\S]*?(?=(" + pattern3[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            Regex rg3 = new Regex(".*[)]", RegexOptions.Multiline | RegexOptions.Singleline);
+            Regex rg4 = new Regex("(?<=(" + pattern3[0] + "))[.\\s\\S]*?(?=(" + pattern3[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            
 
             // 正则的使用
             string resultClass = rg1.Match(apiListFileRead).ToString(); // 匹配出整个api类
@@ -281,7 +289,12 @@ namespace ApiManagePrj
 
                 _resultClass = _resultClass.Substring(apiNameGet.Length + apiNameGet.Index);
 
-                var apiPathGet = rg3.Match(_resultClass);
+                // Console.WriteLine(_resultClass.IndexOf(")"));
+                string originParamGet = _resultClass.Substring(0, _resultClass.IndexOf(")"));
+                Console.WriteLine(originParamGet);
+                listBox8.Items.Add(originParamGet);
+
+                var apiPathGet = rg4.Match(_resultClass);
                 string apiPath = apiPathGet.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); // "/remove("
                 string _apiPath = apiPath.Substring(0); // "remove"
                 listBox6.Items.Add(_apiPath); // "remove"
@@ -304,6 +317,7 @@ namespace ApiManagePrj
         /// </summary>
         private void apiNameAndPathEqual(object sender, EventArgs e)
         {
+            
             ListBox currentListbox = (ListBox)sender; // 注册事件触发
             if (currentListbox.Name == "listBox3") 
             {
@@ -320,9 +334,8 @@ namespace ApiManagePrj
                 }
                 listBox3.SelectedIndex = listBox6.SelectedIndex;
             }
-            textBox3.Text = "params";
             textBox2.Text = listBox6.SelectedItem.ToString();
-            Regex rg = new Regex(@"{.*}", RegexOptions.Multiline|RegexOptions.Singleline);
+            /*Regex rg = new Regex(@"{.*}", RegexOptions.Multiline|RegexOptions.Singleline);
             if (rg.IsMatch(textBox2.Text))
             {
                 string res = rg.Match(textBox2.Text).Value;
@@ -340,6 +353,47 @@ namespace ApiManagePrj
                     }
                 }
                 textBox3.Text = textToText3;
+            }*/
+
+            string oriParams = listBox8.Items[listBox3.SelectedIndex].ToString().Replace(" ",""); // propKey:string,rid:number,options:any={}
+            string[] oriParamsSplit = oriParams.Split(','); // { "propKey:string", "rid:number", "options:any={}"}
+
+            for (int i = 0; i < oriParamsSplit.Length; i++)
+            {
+                int ooindex = oriParamsSplit[i].IndexOf(":");
+                oriParamsSplit[i] = oriParamsSplit[i].Substring(0, ooindex); // { "id", "wordUpdateDTO", "options" }
+            }
+            textBox3.Text = "";
+            bool hasParam = false;
+            foreach(string item in oriParamsSplit)
+            {
+                if(item.EndsWith("DTO") && hasParam == false) // 把DTO转化为params
+                {
+                    if(textBox3.Text == "")
+                    {
+                        textBox3.Text += "params";
+                    }
+                    else
+                    {
+                        textBox3.Text += "\r\n" + "params";
+                    }
+                    hasParam = true;
+                }
+                else if(item.StartsWith("option")) // 跳过options
+                {
+                    continue;
+                }
+                else
+                {
+                    if (textBox3.Text == "")
+                    {
+                        textBox3.Text += item;
+                    }
+                    else
+                    {
+                        textBox3.Text += "\r\n" + item;
+                    }
+                }
             }
         }
 

@@ -69,9 +69,16 @@ namespace ApiManagePrj
             label2.Text = label2.Text + "         在  " + servicesFileName.Replace(" ","") + "  里输入";
             textBox2.Text = servicesApiText.Replace("\n", "\r\n").Replace("\t","  ");
 
-
+            // 输入框不选中任何文字
+            // textBox1.SelectionLength = 0;
+            textBox1.Select(0, 0);
         }
 
+        /// <summary>
+        /// 将接口写入providers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
 

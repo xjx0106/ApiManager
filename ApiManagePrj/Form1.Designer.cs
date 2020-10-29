@@ -53,6 +53,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.listBox8 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -282,11 +284,31 @@
             this.label11.Text = "label11";
             this.label11.Visible = false;
             // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1001, 78);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(53, 12);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "原始参数";
+            // 
+            // listBox8
+            // 
+            this.listBox8.FormattingEnabled = true;
+            this.listBox8.ItemHeight = 12;
+            this.listBox8.Location = new System.Drawing.Point(984, 105);
+            this.listBox8.Name = "listBox8";
+            this.listBox8.Size = new System.Drawing.Size(409, 280);
+            this.listBox8.TabIndex = 23;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(981, 694);
+            this.ClientSize = new System.Drawing.Size(984, 691);
+            this.Controls.Add(this.listBox8);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.listBox7);
@@ -310,6 +332,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
+            this.MaximumSize = new System.Drawing.Size(1000, 730);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -343,6 +366,8 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ListBox listBox8;
     }
 }
 
