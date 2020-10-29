@@ -19,6 +19,12 @@ namespace ApiManagePrj
     public partial class Form1 : Form
     {
         public string projectPath = ""; // 前端项目的地址
+        public string[] apiPrjName; // listBox1
+        public string[] viewsName; // listBox7
+        public string[] providersName; // listBox4
+        public string[] servicesName; // listBox5
+        public int listBox4SelectedIndex = -1;
+        public int listBox5SelectedIndex = -1;
 
         // 公共操作
         /// <summary>
@@ -94,6 +100,7 @@ namespace ApiManagePrj
                 }
             }
 
+            // 在liztBox4添加所扫描到的providers里的js文件
             listBox4.Items.Clear();
             string[] providersFolders = Directory.GetFiles(projectPath + @"\src\providers", "*.js", SearchOption.TopDirectoryOnly);
             foreach (string item in providersFolders)
@@ -101,11 +108,44 @@ namespace ApiManagePrj
                 listBox4.Items.Add(item.Substring(item.LastIndexOf(@"\")+1));
             }
 
+            // 在listBox5添加所扫描到的services里的js文件
             listBox5.Items.Clear();
             string[] servicesFolders = Directory.GetFiles(projectPath + @"\src\services", "*.js", SearchOption.TopDirectoryOnly);
             foreach (string item in servicesFolders)
             {
                 listBox5.Items.Add(item.Substring(item.LastIndexOf(@"\") + 1));
+            }
+
+            // 在listBox7添加所扫描到的views里的js文件
+            listBox7.Items.Clear();
+            string[] viewsFolders = foreachFolders(projectPath + @"\src\views");
+            foreach (string item in viewsFolders)
+            {
+                listBox7.Items.Add(item.Substring(item.LastIndexOf(@"\") + 1));
+            }
+
+            // node-modules 和 providers联动
+            apiPrjName = new string[listBox1.Items.Count];
+            providersName = new string[listBox4.Items.Count + 1];
+            for (int i = 0; i < listBox1.Items.Count; i++)
+            {
+                apiPrjName[i] = listBox1.Items[i].ToString();
+            }
+            for (int i = 0; i < listBox4.Items.Count; i++)
+            {
+                providersName[i] = listBox4.Items[i].ToString();
+            }
+
+            // views 和 services联动
+            viewsName = new string[listBox7.Items.Count];
+            servicesName = new string[listBox5.Items.Count + 1];
+            for (int i = 0; i < listBox7.Items.Count; i++)
+            {
+                viewsName[i] = listBox7.Items[i].ToString();
+            }
+            for (int i = 0; i < listBox5.Items.Count; i++)
+            {
+                servicesName[i] = listBox5.Items[i].ToString();
             }
         }
 
@@ -116,17 +156,21 @@ namespace ApiManagePrj
         /// <param name="e"></param>
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string apiFolderPath = textBox1.Text + @"\node_modules\@dataexa\" + listBox1.SelectedItem.ToString();
+            if (listBox1.SelectedItem == null)
+            {
+                return;
+            }
+            string apiFolderPath = textBox1.Text + @"\node_modules\@dataexa\" + listBox1.SelectedItem.ToString(); // node_modules里的@dataexa里的api-maya-resource
             string apiClassListFilePath = apiFolderPath + @"\src\client\index.ts"; // 要读取Api类名的目标文件
             string apiClassListRead; // 所读取到的api项目里的包含api类名的那个ts文件，返回带有回车和tab的string
-            string apiListClassToString; // 所读取到的api项目里的包含api类名的那个ts文件，去掉了回车空格之类的
+            string apiListClassToString; // apiClassListRead 去掉了回车空格之类的
 
             apiClassListRead = readTextFile(apiClassListFilePath);
             apiListClassToString = apiClassListRead.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", "");
 
             string start = "import{";
             string end = "}from";
-            Regex rg = new Regex("(?<=(" + start + "))[.\\s\\S]*?(?=(" + end + "))", RegexOptions.Multiline | RegexOptions.Singleline);
+            Regex rg = new Regex("(?<=(" + start + "))[.\\s\\S]*?(?=(" + end + "))", RegexOptions.Multiline | RegexOptions.Singleline); // 匹配到了很多个逗号连在一起的api类名
             // Console.WriteLine("apis: " + rg.Match(apiListToString).Value);
 
             string[] apiClasses = rg.Match(apiListClassToString).Value.Split(','); // 将正则所匹配到的"WordApi,WordNetApi,StrategyApi,"匹配逗号分离开，存入apiClasses
@@ -138,7 +182,7 @@ namespace ApiManagePrj
                     listBox2.Items.Add(item);
                 }
             }
-
+            /*
             string selected1 = listBox1.SelectedItem.ToString();
             int indexJump = -1;
             int indexToSelected = -1;
@@ -153,6 +197,45 @@ namespace ApiManagePrj
                 }
             }
             listBox4.SelectedIndex = indexToSelected;
+            
+             */
+            string selectedItemOfListbox1 = listBox1.SelectedItem.ToString(); // api-maya-resources
+
+            providersName[providersName.Length - 1] = "";
+            
+            for (int i = 0;i < providersName.Length;i++)
+            {
+                if(listBox4.Items.Count == providersName.Length)
+                {
+                    listBox4.Items.RemoveAt(providersName.Length-1);
+                }
+                if (providersName[i].StartsWith(selectedItemOfListbox1))
+                {
+                    Console.WriteLine("有匹配");
+                    listBox4.SelectedIndex = i;
+                    break;
+                }else
+                {
+                    listBox4.SelectedIndex = -1;
+                }
+                // 到了最后一个的时候
+                if(i == providersName.Length - 1)
+                {
+                    if(listBox4.Items.Count == i)
+                    {
+                        listBox4.Items.Add(selectedItemOfListbox1 + "   (NEW)");
+                    } else if (listBox4.Items.Count == providersName.Length)
+                    {
+                        listBox4.Items[providersName.Length-1] = selectedItemOfListbox1 + "   (NEW)";
+                    }
+                    listBox4.SelectedIndex = providersName.Length - 1;
+
+                }
+                
+            }
+            listBox4SelectedIndex = listBox4.SelectedIndex;
+
+
         }
 
         /// <summary>
@@ -162,6 +245,10 @@ namespace ApiManagePrj
         /// <param name="e"></param>
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if(listBox2.SelectedItem == null)
+            {
+                return;
+            }
             listBox3.Items.Clear();
             listBox6.Items.Clear();
             string path = projectPath + @"\node_modules\@dataexa\"+ listBox1.SelectedItem + @"\src\api\api.ts"; 
@@ -198,7 +285,7 @@ namespace ApiManagePrj
                 string apiPath = apiPathGet.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); // "/remove("
                 string _apiPath = apiPath.Substring(0); // "remove"
                 listBox6.Items.Add(_apiPath); // "remove"
-                Console.WriteLine(_apiPath);
+                // Console.WriteLine(_apiPath);
             }
         }
 
@@ -220,9 +307,17 @@ namespace ApiManagePrj
             ListBox currentListbox = (ListBox)sender; // 注册事件触发
             if (currentListbox.Name == "listBox3") 
             {
+                if (listBox3.SelectedItem == null)
+                {
+                    return;
+                }
                 listBox6.SelectedIndex = listBox3.SelectedIndex;
             }else if (currentListbox.Name == "listBox6")
             {
+                if (listBox6.SelectedItem == null)
+                {
+                    return;
+                }
                 listBox3.SelectedIndex = listBox6.SelectedIndex;
             }
             textBox3.Text = "params";
@@ -231,7 +326,20 @@ namespace ApiManagePrj
             if (rg.IsMatch(textBox2.Text))
             {
                 string res = rg.Match(textBox2.Text).Value;
-                textBox3.Text = res.Substring(1,res.Length-2);
+                string[] _params = res.Split('/');
+                string textToText3 = "";
+                for (int i = 0; i < _params.Length; i++)
+                {
+                    if (i == 0)
+                    {
+                        textToText3 = _params[0].Substring(1, _params[i].Length - 2) + "\r";
+                    }
+                    else
+                    {
+                        textToText3 = textToText3 + "\r\n" + _params[i].Substring(1, _params[i].Length - 2);
+                    }
+                }
+                textBox3.Text = textToText3;
             }
         }
 
@@ -242,23 +350,134 @@ namespace ApiManagePrj
         /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
-            if (listBox4.SelectedIndex == -1 || listBox5.SelectedIndex == -1) // 检测有没有选择对应的providers和services
+            if (listBox1.SelectedIndex == -1)
             {
-                MessageBox.Show("请选择Providers和Services");
+                label11.Text = "没选择项目名\n（没选择Providers）";
+                tipChooseComplete();
                 return;
             }
-            string apiPrjName = listBox1.SelectedItem.ToString();
-            string apiClassName = listBox2.SelectedItem.ToString();
-            string apiName = listBox3.SelectedItem.ToString();
-            string apiParameterName = textBox3.Text;
-            string servicesFileName = listBox5.Text;
-            string prjPath = textBox1.Text;
+            else if (listBox2.SelectedIndex == -1)
+            {
+                label11.Text = "没选择api类名";
+                tipChooseComplete();
+                return;
+            }
+            else if (listBox3.SelectedIndex == -1)
+            {
+                label11.Text = "没选择api接口名";
+                tipChooseComplete();
+                return;
+            }
+            else if (listBox7.SelectedIndex == -1)
+            {
+                label11.Text = "没选择页面名（没选择Services）";
+                tipChooseComplete();
+                return;
+            }
+
+            string apiPrjNameToForm2 = listBox1.SelectedItem.ToString(); // "api-maya-resource"
+            string apiClassNameToForm2 = listBox2.SelectedItem.ToString(); // "RulesLibraryApi"
+            string apiNameToForm2 = listBox3.SelectedItem.ToString(); // "page"
+            string apiParameterNameToForm2 = textBox3.Text; // "params"
+            string providersFileNameToForm2 = listBox4.Text; // "api-maya-resource.js"
+            string servicesFileNameToForm2 = listBox5.Text; // "rule-library   (NEW)"
+            string viewsNameToForm2 = listBox7.Text; // "rule-library"
+            string prjPathToForm2 = textBox1.Text; // C:\\Users\\xxxxxx\\xxxxxxx\\rule-library
+            new Form2(apiPrjNameToForm2, apiClassNameToForm2, apiNameToForm2, apiParameterNameToForm2, servicesFileNameToForm2, prjPathToForm2, providersFileNameToForm2, viewsNameToForm2).Show();
+            
+        }
+
+        /// <summary>
+        /// 选择页面的名字
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listBox7_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox7.SelectedItem == null)
+            {
+                return;
+            }
+
+            string selectedItemOfListbox2 = listBox7.SelectedItem.ToString(); // api-maya-resources
+
+            servicesName[servicesName.Length - 1] = "";
+
+            for (int i = 0; i < servicesName.Length; i++)
+            {
+                if (listBox5.Items.Count == servicesName.Length)
+                {
+                    listBox5.Items.RemoveAt(servicesName.Length - 1);
+                }
+                if (servicesName[i].StartsWith(selectedItemOfListbox2))
+                {
+                    Console.WriteLine("有匹配");
+                    listBox5.SelectedIndex = i;
+                    break;
+                }
+                else
+                {
+                    listBox5.SelectedIndex = -1;
+                }
+                // 到了最后一个的时候
+                if (i == servicesName.Length - 1)
+                {
+                    if (listBox5.Items.Count == i)
+                    {
+                        listBox5.Items.Add(selectedItemOfListbox2 + "   (NEW)");
+                    }
+                    else if (listBox5.Items.Count == servicesName.Length)
+                    {
+                        listBox5.Items[servicesName.Length - 1] = selectedItemOfListbox2 + "   (NEW)";
+                    }
+                    listBox5.SelectedIndex = servicesName.Length - 1;
+
+                }
+
+            }
+            listBox5SelectedIndex = listBox5.SelectedIndex;
+        }
+
+        /// <summary>
+        /// listbox4(providers)被点击了
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listBox4_Click(object sender, EventArgs e)
+        {
+            listBox4.SelectedIndex = listBox4SelectedIndex;
+            tipOnlyLook();
+        }
+
+        /// <summary>
+        /// listbox5(services)被点击了
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void listBox5_Click(object sender, EventArgs e)
+        {
+            listBox5.SelectedIndex = listBox5SelectedIndex;
+            tipOnlyLook();
+        }
 
 
+        public void tipOnlyLook()
+        {
+            timer1.Start();
+            label10.Visible = true;
+        }
 
+        public void tipChooseComplete()
+        {
+            timer1.Start();
+            label11.Visible = true;
+        }
 
-            new Form2(apiPrjName, apiClassName, apiName, apiParameterName, servicesFileName, prjPath).Show();
-
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            label10.Visible = false;
+            label11.Visible = false;
+            timer1.Stop();
         }
     }
 }
