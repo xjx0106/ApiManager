@@ -39,6 +39,7 @@
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBox1.Location = new System.Drawing.Point(27, 43);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
@@ -66,6 +67,7 @@
             // textBox2
             // 
             this.textBox2.BackColor = System.Drawing.SystemColors.Window;
+            this.textBox2.Font = new System.Drawing.Font("Consolas", 9F);
             this.textBox2.Location = new System.Drawing.Point(27, 229);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
@@ -74,7 +76,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(628, 152);
+            this.button1.Location = new System.Drawing.Point(572, 152);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(66, 23);
             this.button1.TabIndex = 1;
@@ -84,7 +86,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(628, 334);
+            this.button2.Location = new System.Drawing.Point(572, 347);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(66, 23);
             this.button2.TabIndex = 4;
@@ -96,14 +98,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(561, 409);
+            this.ClientSize = new System.Drawing.Size(773, 477);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.MaximumSize = new System.Drawing.Size(577, 448);
             this.Name = "Form2";
             this.Text = "Form2";
             this.ResumeLayout(false);

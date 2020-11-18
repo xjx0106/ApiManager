@@ -79,11 +79,12 @@
             // listBox1
             // 
             this.listBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.listBox1.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
+            this.listBox1.ItemHeight = 14;
             this.listBox1.Location = new System.Drawing.Point(40, 105);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(183, 280);
+            this.listBox1.Size = new System.Drawing.Size(183, 270);
             this.listBox1.TabIndex = 2;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
@@ -107,11 +108,12 @@
             // 
             // listBox2
             // 
+            this.listBox2.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 12;
+            this.listBox2.ItemHeight = 14;
             this.listBox2.Location = new System.Drawing.Point(240, 105);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(212, 280);
+            this.listBox2.Size = new System.Drawing.Size(212, 270);
             this.listBox2.TabIndex = 5;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
@@ -126,11 +128,12 @@
             // 
             // listBox3
             // 
+            this.listBox3.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox3.FormattingEnabled = true;
-            this.listBox3.ItemHeight = 12;
+            this.listBox3.ItemHeight = 14;
             this.listBox3.Location = new System.Drawing.Point(467, 105);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(140, 280);
+            this.listBox3.Size = new System.Drawing.Size(140, 270);
             this.listBox3.TabIndex = 6;
             this.listBox3.SelectedIndexChanged += new System.EventHandler(this.apiNameAndPathEqual);
             // 
@@ -156,11 +159,12 @@
             // 
             this.listBox4.BackColor = System.Drawing.Color.WhiteSmoke;
             this.listBox4.Cursor = System.Windows.Forms.Cursors.No;
+            this.listBox4.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox4.FormattingEnabled = true;
-            this.listBox4.ItemHeight = 12;
+            this.listBox4.ItemHeight = 14;
             this.listBox4.Location = new System.Drawing.Point(40, 450);
             this.listBox4.Name = "listBox4";
-            this.listBox4.Size = new System.Drawing.Size(157, 196);
+            this.listBox4.Size = new System.Drawing.Size(157, 186);
             this.listBox4.TabIndex = 9;
             this.listBox4.Click += new System.EventHandler(this.listBox4_Click);
             // 
@@ -168,19 +172,21 @@
             // 
             this.listBox5.BackColor = System.Drawing.Color.WhiteSmoke;
             this.listBox5.Cursor = System.Windows.Forms.Cursors.No;
+            this.listBox5.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox5.FormattingEnabled = true;
-            this.listBox5.ItemHeight = 12;
+            this.listBox5.ItemHeight = 14;
             this.listBox5.Location = new System.Drawing.Point(195, 450);
             this.listBox5.Name = "listBox5";
-            this.listBox5.Size = new System.Drawing.Size(189, 196);
+            this.listBox5.Size = new System.Drawing.Size(189, 186);
             this.listBox5.TabIndex = 10;
             this.listBox5.Click += new System.EventHandler(this.listBox5_Click);
             // 
             // textBox2
             // 
+            this.textBox2.Font = new System.Drawing.Font("Consolas", 9F);
             this.textBox2.Location = new System.Drawing.Point(607, 451);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(341, 21);
+            this.textBox2.Size = new System.Drawing.Size(341, 22);
             this.textBox2.TabIndex = 11;
             // 
             // button2
@@ -213,6 +219,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.Font = new System.Drawing.Font("Consolas", 9F);
             this.textBox3.Location = new System.Drawing.Point(606, 522);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
@@ -221,11 +228,12 @@
             // 
             // listBox6
             // 
+            this.listBox6.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox6.FormattingEnabled = true;
-            this.listBox6.ItemHeight = 12;
+            this.listBox6.ItemHeight = 14;
             this.listBox6.Location = new System.Drawing.Point(606, 105);
             this.listBox6.Name = "listBox6";
-            this.listBox6.Size = new System.Drawing.Size(341, 280);
+            this.listBox6.Size = new System.Drawing.Size(341, 270);
             this.listBox6.TabIndex = 16;
             this.listBox6.SelectedIndexChanged += new System.EventHandler(this.apiNameAndPathEqual);
             // 
@@ -249,11 +257,12 @@
             // 
             // listBox7
             // 
+            this.listBox7.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox7.FormattingEnabled = true;
-            this.listBox7.ItemHeight = 12;
+            this.listBox7.ItemHeight = 14;
             this.listBox7.Location = new System.Drawing.Point(401, 450);
             this.listBox7.Name = "listBox7";
-            this.listBox7.Size = new System.Drawing.Size(183, 196);
+            this.listBox7.Size = new System.Drawing.Size(183, 186);
             this.listBox7.TabIndex = 19;
             this.listBox7.SelectedIndexChanged += new System.EventHandler(this.listBox7_SelectedIndexChanged);
             // 

@@ -105,7 +105,14 @@ namespace ApiManagePrj
 
             // 在liztBox4添加所扫描到的providers里的js文件
             listBox4.Items.Clear();
-            string[] providersFolders = Directory.GetFiles(projectPath + @"\src\providers", "*.js", SearchOption.TopDirectoryOnly);
+            string[] providersFolders;
+            try
+            {
+                providersFolders = Directory.GetFiles(projectPath + @"\src\providers", "*.js", SearchOption.TopDirectoryOnly);
+            } catch
+            {
+                return;
+            }
             foreach (string item in providersFolders)
             {
                 listBox4.Items.Add(item.Substring(item.LastIndexOf(@"\")+1));
