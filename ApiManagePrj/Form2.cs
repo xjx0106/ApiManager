@@ -46,7 +46,7 @@ namespace ApiManagePrj
             }
             foreach(string item in _apiPrjNameUpper)
             {
-                apiPrjNameUpper = apiPrjNameUpper + item;
+                apiPrjNameUpper = apiPrjNameUpper + item; // "apiMayaResource"
             }
 
             // 组装providers的文字

@@ -59,9 +59,10 @@
             // 
             // textBox1
             // 
+            this.textBox1.Font = new System.Drawing.Font("Consolas", 9F);
             this.textBox1.Location = new System.Drawing.Point(44, 38);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(601, 21);
+            this.textBox1.Size = new System.Drawing.Size(601, 22);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "C:\\Users\\XuJingxin\\Desktop\\rule-library";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
@@ -193,7 +194,7 @@
             // 
             this.button2.Location = new System.Drawing.Point(789, 533);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(45, 21);
+            this.button2.Size = new System.Drawing.Size(45, 26);
             this.button2.TabIndex = 12;
             this.button2.Text = "生成";
             this.button2.UseVisualStyleBackColor = true;
@@ -223,7 +224,7 @@
             this.textBox3.Location = new System.Drawing.Point(606, 522);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(111, 61);
+            this.textBox3.Size = new System.Drawing.Size(148, 61);
             this.textBox3.TabIndex = 15;
             // 
             // listBox6
