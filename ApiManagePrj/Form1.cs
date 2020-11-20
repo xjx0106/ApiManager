@@ -76,7 +76,20 @@ namespace ApiManagePrj
         }
 
         /// <summary>
+        /// 项目地址输入框文字更变的事件触发
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            projectPath = textBox1.Text;
+        }
+
+        /// <summary>
         /// 点击按钮，解析前端项目，在listBox1添加所检索到的api项目名
+        /// </summary>
+        /// <summary>
+        /// 原理是通过检索\node_modules\@dataexa里的api开头的文件夹。来检测api项目（的名字和数量）。
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -161,6 +174,9 @@ namespace ApiManagePrj
 
         /// <summary>
         /// 点击listBox1里的项目，遍历该Api项目的api类名
+        /// </summary>
+        /// <summary>
+        /// 拼接路径，匹配.../src/client/index.ts里面的import {} from 中中括号里的东西，这是api类名，将这些api类名加入listbox2里。
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -251,6 +267,9 @@ namespace ApiManagePrj
         /// <summary>
         /// listBox2项被点击的事件触发
         /// </summary>
+        /// <summary>
+        /// 通过listbox1所选中的api项目，去该项目的\src\api\api.ts里，拿lsitbox2（api类名）去匹配该api类，找到里面的所有方法。
+        /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -260,18 +279,18 @@ namespace ApiManagePrj
                 return;
             }
             textBox2.Text = "";
-            textBox3.Text = "";
             listBox3.Items.Clear();
             listBox6.Items.Clear();
             listBox8.Items.Clear();
+            listBox9.Items.Clear();
             string path = projectPath + @"\node_modules\@dataexa\"+ listBox1.SelectedItem + @"\src\api\api.ts"; 
             // Console.WriteLine(path);
             string apiListFileRead = readTextFile(path);
 
             // 正则的规则
             // pattern1 用于匹配出api.ts里的整个API类，匹配出来的东西里面包含了该Api类所有的api接口。
-            // pattern2
-            // pattern3 用于匹配出每个api接口名字。
+            // pattern2 用于匹配出每个api的方法名
+            // pattern3 用于匹配出每个api的请求地址
             string[] pattern1 = { "" + listBox2.SelectedItem.ToString()+ " - axios parameter creator", listBox2.SelectedItem.ToString() + " - functional programming interface" }; // 用于识别WordApi
             string pattern2 = @"/\n\s*\b\w*\b[(]"; // \n\s*\b\w*\b[(] new Regex(@"\n\s*\b\w*\b[(]")
             string[] pattern3 = { "localVarPath = `", "`" }; // api的请求地址
@@ -282,19 +301,19 @@ namespace ApiManagePrj
             Regex rg3 = new Regex(".*[)]", RegexOptions.Multiline | RegexOptions.Singleline);
             Regex rg4 = new Regex("(?<=(" + pattern3[0] + "))[.\\s\\S]*?(?=(" + pattern3[1] + "))", RegexOptions.Multiline | RegexOptions.Singleline);
             
-
             // 正则的使用
             string resultClass = rg1.Match(apiListFileRead).ToString(); // 匹配出整个api类
             string _resultClass = resultClass; // 复制api类用于操作
  
             while(rg2.IsMatch(_resultClass)) // 判断剩余的字符串里是否还有匹配的接口名
             {
-                var apiNameGet = rg2.Match(_resultClass); // "/\n remove("              带有空格和回车的api名
+                // 匹配出首个api接口名，添加进listbox3
+                var apiNameGet = rg2.Match(_resultClass); // "/\n remove(" 带有空格和回车的api名
                 string apiName = apiNameGet.Value.Replace("\n", "").Replace(" ", "").Replace("\t", "").Replace("\r", ""); // "/remove("
                 string _apiName = apiName.Substring(1, apiName.Length - 2); // "remove"
                 listBox3.Items.Add(_apiName); // "remove"
 
-                _resultClass = _resultClass.Substring(apiNameGet.Length + apiNameGet.Index);
+                _resultClass = _resultClass.Substring(apiNameGet.Length + apiNameGet.Index); // 删除掉已经用掉的一届（截止到方法名）
 
                 // Console.WriteLine(_resultClass.IndexOf(")"));
                 string originParamGet = _resultClass.Substring(0, _resultClass.IndexOf(")"));
@@ -310,21 +329,14 @@ namespace ApiManagePrj
         }
 
         /// <summary>
-        /// 项目地址输入框文字更变的事件触发
+        /// listBox3或listBox6点击
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            projectPath = textBox1.Text;
-        }
-
         /// <summary>
         /// 点击api名或者path名两边对等
         /// </summary>
         private void apiNameAndPathEqual(object sender, EventArgs e)
         {
-            
+            // 同步两边的选项
             ListBox currentListbox = (ListBox)sender; // 注册事件触发
             if (currentListbox.Name == "listBox3") 
             {
@@ -341,49 +353,23 @@ namespace ApiManagePrj
                 }
                 listBox3.SelectedIndex = listBox6.SelectedIndex;
             }
-            textBox2.Text = listBox6.SelectedItem.ToString();
-            /*Regex rg = new Regex(@"{.*}", RegexOptions.Multiline|RegexOptions.Singleline);
-            if (rg.IsMatch(textBox2.Text))
-            {
-                string res = rg.Match(textBox2.Text).Value;
-                string[] _params = res.Split('/');
-                string textToText3 = "";
-                for (int i = 0; i < _params.Length; i++)
-                {
-                    if (i == 0)
-                    {
-                        textToText3 = _params[0].Substring(1, _params[i].Length - 2) + "\r";
-                    }
-                    else
-                    {
-                        textToText3 = textToText3 + "\r\n" + _params[i].Substring(1, _params[i].Length - 2);
-                    }
-                }
-                textBox3.Text = textToText3;
-            }*/
+            textBox2.Text = listBox6.SelectedItem.ToString(); // 存放当前请求路径的textBox
 
-            string oriParams = listBox8.Items[listBox3.SelectedIndex].ToString().Replace(" ",""); // propKey:string,rid:number,options:any={}
-            string[] oriParamsSplit = oriParams.Split(','); // { "propKey:string", "rid:number", "options:any={}"}
-
+            string oriParams = listBox8.Items[listBox3.SelectedIndex].ToString().Replace(" ", "").Replace("?", ""); // propKey:string,rid:number,options:any={}
+            string[] oriParamsSplit = oriParams.Split(','); // ["propKey:string", "rid:number", "options:any={}"]\
+            // 这个for循环用于将上面一行的冒号和冒号后面的类型去掉
             for (int i = 0; i < oriParamsSplit.Length; i++)
             {
                 int ooindex = oriParamsSplit[i].IndexOf(":");
                 oriParamsSplit[i] = oriParamsSplit[i].Substring(0, ooindex); // { "id", "wordUpdateDTO", "options" }
             }
-            textBox3.Text = "";
+            listBox9.Items.Clear(); // 清除存放请求参数的listBox9
             bool hasParam = false;
             foreach(string item in oriParamsSplit)
             {
                 if(item.EndsWith("DTO") && hasParam == false) // 把DTO转化为params
                 {
-                    if(textBox3.Text == "")
-                    {
-                        textBox3.Text += "params";
-                    }
-                    else
-                    {
-                        textBox3.Text += "\r\n" + "params";
-                    }
+                    listBox9.Items.Add(item);
                     hasParam = true;
                 }
                 else if(item.StartsWith("option")) // 跳过options
@@ -392,14 +378,7 @@ namespace ApiManagePrj
                 }
                 else
                 {
-                    if (textBox3.Text == "")
-                    {
-                        textBox3.Text += item;
-                    }
-                    else
-                    {
-                        textBox3.Text += "\r\n" + item;
-                    }
+                    listBox9.Items.Add(item);
                 }
             }
         }
@@ -439,11 +418,17 @@ namespace ApiManagePrj
             string apiPrjNameToForm2 = listBox1.SelectedItem.ToString(); // "api-maya-resource"
             string apiClassNameToForm2 = listBox2.SelectedItem.ToString(); // "RulesLibraryApi"
             string apiNameToForm2 = listBox3.SelectedItem.ToString(); // "page"
-            string apiParameterNameToForm2 = textBox3.Text; // "params"
+            string apiParameterNameToForm2 = ""; // "id1,id2,id3"
             string providersFileNameToForm2 = listBox4.Text; // "api-maya-resource.js"
             string servicesFileNameToForm2 = listBox5.Text; // "rule-library   (NEW)"
             string viewsNameToForm2 = listBox7.Text; // "rule-library"
             string prjPathToForm2 = textBox1.Text; // C:\\Users\\xxxxxx\\xxxxxxx\\rule-library
+
+            foreach(string item in listBox9.Items)
+            {
+                    apiParameterNameToForm2 += item + ",";
+            }
+            apiParameterNameToForm2 = apiParameterNameToForm2.Substring(0, apiParameterNameToForm2.Length-1);
             new Form2(apiPrjNameToForm2, apiClassNameToForm2, apiNameToForm2, apiParameterNameToForm2, servicesFileNameToForm2, prjPathToForm2, providersFileNameToForm2, viewsNameToForm2).Show();
             
         }

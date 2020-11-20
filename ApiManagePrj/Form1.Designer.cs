@@ -55,6 +55,7 @@
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.listBox8 = new System.Windows.Forms.ListBox();
+            this.listBox9 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // textBox1
@@ -305,18 +306,30 @@
             // 
             // listBox8
             // 
+            this.listBox8.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox8.FormattingEnabled = true;
-            this.listBox8.ItemHeight = 12;
+            this.listBox8.ItemHeight = 14;
             this.listBox8.Location = new System.Drawing.Point(984, 105);
             this.listBox8.Name = "listBox8";
-            this.listBox8.Size = new System.Drawing.Size(409, 280);
+            this.listBox8.Size = new System.Drawing.Size(655, 270);
             this.listBox8.TabIndex = 23;
+            // 
+            // listBox9
+            // 
+            this.listBox9.Font = new System.Drawing.Font("Consolas", 9F);
+            this.listBox9.FormattingEnabled = true;
+            this.listBox9.ItemHeight = 14;
+            this.listBox9.Location = new System.Drawing.Point(606, 590);
+            this.listBox9.Name = "listBox9";
+            this.listBox9.Size = new System.Drawing.Size(148, 74);
+            this.listBox9.TabIndex = 24;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(984, 691);
+            this.ClientSize = new System.Drawing.Size(1673, 745);
+            this.Controls.Add(this.listBox9);
             this.Controls.Add(this.listBox8);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
@@ -342,7 +355,6 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
-            this.MaximumSize = new System.Drawing.Size(1000, 730);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -378,6 +390,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ListBox listBox8;
+        private System.Windows.Forms.ListBox listBox9;
     }
 }
 

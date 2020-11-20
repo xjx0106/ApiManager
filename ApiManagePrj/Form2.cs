@@ -19,11 +19,12 @@ namespace ApiManagePrj
             apiPrjName, // "api-maya-resource"
             apiClassName, // "RulesLibraryApi"
             apiName, // "page"
-            apiParameterName, // "params"
+            apiParameterName, // "id1,id2,id3"
             servicesFileName, // "rule-library   (NEW)"
             prjPath, // "C:\\Users\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\rule-library"
             providersFileName, // "api-maya-resource.js"
             viewsName; // "rule-library"
+        
         public string apiPrjNameUpper;
 
         public Form2(string _apiPrjName, string _apiClassName, string _apiName, string _apiParameterName, string _servicesFileName, string _prjPath, string _providersFileName, string _viewsName)
@@ -33,7 +34,7 @@ namespace ApiManagePrj
             apiPrjName = _apiPrjName; // "api-maya-resource"
             apiClassName = _apiClassName; // "RulesLibraryApi"
             apiName = _apiName; // "page"
-            apiParameterName = _apiParameterName; // "params"
+            apiParameterName = _apiParameterName; // "id,appName,appInfo"
             servicesFileName = _servicesFileName; // "rule-library   (NEW)"
             prjPath = _prjPath; // "C:\\Users\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\rule-library"
             providersFileName = _providersFileName; // "api-maya-resource.js"
@@ -49,7 +50,7 @@ namespace ApiManagePrj
                 apiPrjNameUpper = apiPrjNameUpper + item; // "apiMayaResource"
             }
 
-            // 组装providers的文字
+            // 组装providers的文字（用于展示在textBox手动添加）
             string providersApiText = "\t" + apiName + "(" + apiParameterName + "){\n\t\treturn HttpClient." + apiClassName + "." + apiName + "(" + apiParameterName + ");\n\t}";
             string providersText = apiClassName + ":{\n" + providersApiText + "\n}";
 
@@ -81,7 +82,25 @@ namespace ApiManagePrj
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
+            string path = prjPath + @"\src\providers\" + providersFileName;
 
+            // 没有该文件的情况
+            if (File.Exists(path))
+            {
+                MessageBox.Show("存在文件");
+                // File.Delete(dddd);//删除该文件
+            } else {
+                MessageBox.Show("不存在文件");
+                File.Create(path);//创建该文件，如果路径文件夹不存在，则报错。
+            }
+
+            // 有该文件但是没有import的情况
+
+            // 有该文件、有import，但是没有api类的情况
+
+            // 有该文件、有import，有api类，但是没有方法的情况
+
+            // 有该文件、有import，有api类，有方法的情况
         }
 
         /// <summary>
