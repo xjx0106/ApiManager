@@ -222,7 +222,7 @@
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Consolas", 9F);
-            this.textBox3.Location = new System.Drawing.Point(606, 522);
+            this.textBox3.Location = new System.Drawing.Point(989, 603);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(148, 61);
@@ -319,16 +319,16 @@
             this.listBox9.Font = new System.Drawing.Font("Consolas", 9F);
             this.listBox9.FormattingEnabled = true;
             this.listBox9.ItemHeight = 14;
-            this.listBox9.Location = new System.Drawing.Point(606, 590);
+            this.listBox9.Location = new System.Drawing.Point(606, 533);
             this.listBox9.Name = "listBox9";
-            this.listBox9.Size = new System.Drawing.Size(148, 74);
+            this.listBox9.Size = new System.Drawing.Size(148, 102);
             this.listBox9.TabIndex = 24;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1673, 745);
+            this.ClientSize = new System.Drawing.Size(978, 695);
             this.Controls.Add(this.listBox9);
             this.Controls.Add(this.listBox8);
             this.Controls.Add(this.label12);
@@ -355,6 +355,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
+            this.MaximumSize = new System.Drawing.Size(994, 734);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);

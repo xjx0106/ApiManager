@@ -255,7 +255,6 @@ namespace ApiManagePrj
                         listBox4.Items[providersName.Length-1] = selectedItemOfListbox1 + "   (NEW)";
                     }
                     listBox4.SelectedIndex = providersName.Length - 1;
-
                 }
                 
             }
@@ -420,16 +419,25 @@ namespace ApiManagePrj
             string apiNameToForm2 = listBox3.SelectedItem.ToString(); // "page"
             string apiParameterNameToForm2 = ""; // "id1,id2,id3"
             string providersFileNameToForm2 = listBox4.Text; // "api-maya-resource.js"
-            string servicesFileNameToForm2 = listBox5.Text; // "rule-library   (NEW)"
+            string servicesFileNameToForm2 = listBox5.Text; // "rule-library-api.js"
             string viewsNameToForm2 = listBox7.Text; // "rule-library"
             string prjPathToForm2 = textBox1.Text; // C:\\Users\\xxxxxx\\xxxxxxx\\rule-library
 
             foreach(string item in listBox9.Items)
             {
-                    apiParameterNameToForm2 += item + ",";
+                apiParameterNameToForm2 += item + ",";
             }
             apiParameterNameToForm2 = apiParameterNameToForm2.Substring(0, apiParameterNameToForm2.Length-1);
-            new Form2(apiPrjNameToForm2, apiClassNameToForm2, apiNameToForm2, apiParameterNameToForm2, servicesFileNameToForm2, prjPathToForm2, providersFileNameToForm2, viewsNameToForm2).Show();
+            new Form2(
+                apiPrjNameToForm2,
+                apiClassNameToForm2,
+                apiNameToForm2,
+                apiParameterNameToForm2,
+                servicesFileNameToForm2,
+                prjPathToForm2,
+                providersFileNameToForm2,
+                viewsNameToForm2
+            ).Show();
             
         }
 

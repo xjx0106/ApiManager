@@ -27,18 +27,27 @@ namespace ApiManagePrj
         
         public string apiPrjNameUpper;
 
-        public Form2(string _apiPrjName, string _apiClassName, string _apiName, string _apiParameterName, string _servicesFileName, string _prjPath, string _providersFileName, string _viewsName)
+        public Form2(
+            string _apiPrjName,
+            string _apiClassName,
+            string _apiName,
+            string _apiParameterName,
+            string _servicesFileName,
+            string _prjPath,
+            string _providersFileName,
+            string _viewsName
+            )
         {
             InitializeComponent();
 
-            apiPrjName = _apiPrjName; // "api-maya-resource"
-            apiClassName = _apiClassName; // "RulesLibraryApi"
-            apiName = _apiName; // "page"
-            apiParameterName = _apiParameterName; // "id,appName,appInfo"
-            servicesFileName = _servicesFileName; // "rule-library   (NEW)"
-            prjPath = _prjPath; // "C:\\Users\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\rule-library"
+            apiPrjName        = _apiPrjName;        // "api-maya-resource"
+            apiClassName      = _apiClassName;      // "RulesLibraryApi"
+            apiName           = _apiName;           // "page"
+            apiParameterName  = _apiParameterName;  // "id,appName,appInfo"
+            servicesFileName  = _servicesFileName;  // "rule-library   (NEW)"
+            prjPath           = _prjPath;           // "C:\\Users\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\xxxxxx\\rule-library"
             providersFileName = _providersFileName; // "api-maya-resource.js"
-            viewsName = _viewsName; // "rule-library"
+            viewsName         = _viewsName;         // "rule-library"
 
             string[] _apiPrjNameUpper = apiPrjName.Split('-');
             for(int i = 1;i < _apiPrjNameUpper.Length; i++)
@@ -82,7 +91,16 @@ namespace ApiManagePrj
         /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
-            string path = prjPath + @"\src\providers\" + providersFileName;
+            // 如果路径有（new）就将其去掉
+            string fileName = providersFileName.Replace("(NEW)", "").Replace(" ", "");
+            string path = "";
+            if (!fileName.Contains(".js"))
+            {
+                path = prjPath + @"\src\providers\" + fileName + ".js";
+            }else
+            {
+                path = prjPath + @"\src\providers\" + fileName;
+            }
 
             // 没有该文件的情况
             if (File.Exists(path))
@@ -102,6 +120,7 @@ namespace ApiManagePrj
 
             // 有该文件、有import，有api类，有方法的情况
         }
+
 
         /// <summary>
         /// 将该接口写入services
